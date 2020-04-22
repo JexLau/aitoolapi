@@ -1,9 +1,32 @@
-import { EggAppConfig, PowerPartial } from 'egg';
+import { EggAppConfig, EggAppInfo, PowerPartial } from 'egg';
 
-export default () => {
+export default (appInfo: EggAppInfo) => {
   const config: PowerPartial<EggAppConfig> = {};
 
   config.env = 'Client';
+
+  config.keys = appInfo.name + '_1587439273340_8817';
+
+  config.middleware = [];
+
+  config.cluster = {
+    listen: {
+      path: '',
+      port: 7012,
+      hostname: '0.0.0.0',
+    },
+  };
+
+  // 开启跨域
+  config.security = {
+    csrf: {
+      enable: false,
+    },
+  };
+  config.cors = {
+    origin: '*',
+    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH',
+  };
 
   // 数据库
   config.sequelize = {
