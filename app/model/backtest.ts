@@ -1,5 +1,5 @@
-
-module.exports = app => {
+import { Application } from 'egg';
+module.exports = (app: Application) => {
   const { STRING, DATE, DECIMAL } = app.Sequelize;
   const Backtest = app.model.define('backtest', {
     Id: {

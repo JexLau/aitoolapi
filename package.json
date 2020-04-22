@@ -8,6 +8,7 @@
     "declarations": true
   },
   "scripts": {
+    "start:tsc": "npm run tsc && npm run start",
     "start": "egg-scripts start --title=egg-server-bussiness --port 7012",
     "stop": "egg-scripts stop --title=egg-server-bussiness",
     "dev": "egg-bin dev --port 7012",
@@ -23,6 +24,7 @@
   },
   "dependencies": {
     "egg": "^2.6.1",
+    "egg-cors": "^2.2.3",
     "egg-scripts": "^2.6.0",
     "egg-sequelize": "^5.2.1",
     "moment-timezone": "^0.5.28",

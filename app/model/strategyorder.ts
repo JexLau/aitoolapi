@@ -1,5 +1,6 @@
 
-module.exports = app => {
+import { Application } from 'egg';
+module.exports = (app: Application) => {
   const { STRING, DATE, DECIMAL, INTEGER } = app.Sequelize;
   const StrategyOrder = app.model.define('strategyorder', {
     Id: {

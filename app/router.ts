@@ -3,6 +3,7 @@ import { Application } from 'egg';
 export default (app: Application) => {
   const { controller, router } = app;
   // 策略
+  router.get('/', controller.strategy.Test);
   router.get('/api/:UserId/strategy', controller.strategy.StrategyList);
   router.post('/api/:UserId/strategy', controller.strategy.AddStrategy);
   router.put('/api/strategy/:Id', controller.strategy.UpdateStrategy);

@@ -2,6 +2,11 @@ import { Controller } from 'egg';
 import moment = require('moment-timezone');
 
 export default class StrategyController extends Controller {
+  public Test() {
+    const { ctx } = this;
+    ctx.body = { ok: 'hello' };
+  }
+
   public async StrategyList() {
     const { ctx } = this;
     try {
