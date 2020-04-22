@@ -1,6 +1,6 @@
 import { EggAppConfig, EggAppInfo, PowerPartial } from 'egg';
 
-export default () => {
+export default (appInfo: EggAppInfo) => {
   const config: PowerPartial<EggAppConfig> = {};
 
   config.env = 'Test';
