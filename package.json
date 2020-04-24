@@ -28,7 +28,8 @@
     "egg-scripts": "^2.6.0",
     "egg-sequelize": "^5.2.1",
     "moment-timezone": "^0.5.28",
-    "mysql2": "^2.1.0"
+    "mysql2": "^2.1.0",
+    "pg": "^8.0.3"
   },
   "devDependencies": {
     "@types/mocha": "^2.2.40",

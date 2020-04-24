@@ -39,4 +39,20 @@ export default class BacktestResult extends Service {
     };
   }
 
+  public async Standard(BacktestId: string) {
+    const LogsList = await this.ctx.model.Logs.findAll({
+      where: {
+        BacktestId,
+      },
+      raw: true,
+    });
+    return {
+      Head: {
+        Code: '200', Message: '获取列表成功！', CallTime: moment().tz('UTC').format('YYYYMMDDHHmmss'),
+      },
+      Result: {
+        LogsList,
+      },
+    };
+  }
 }
