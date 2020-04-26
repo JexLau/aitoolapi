@@ -47,7 +47,9 @@ if (PostgreSQL_Session) {
 }
 
 export default (appInfo: EggAppInfo) => {
-  const config = {} as PowerPartial<EggAppConfig>;
+  const config: PowerPartial<EggAppConfig> = {};
+
+  config.env = 'Client';
 
   config.keys = appInfo.name + '_1587439273340_8817';
 
@@ -72,8 +74,6 @@ export default (appInfo: EggAppInfo) => {
     allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH',
   };
 
-  config.env = 'A';
-
   // 数据库
   config.sequelize = {
     datasources: [
@@ -82,10 +82,10 @@ export default (appInfo: EggAppInfo) => {
         baseDir: 'model', // load models from `app/model/*.js`
         dialect: 'mysql',
         database: 'samdata_terminal',
-        host: MySQLConfig.host || '192.168.134.241',
-        port: MySQLConfig.port || 3306,
-        username: MySQLConfig.username || 'bitcoin',
-        password: MySQLConfig.password || 'bitcoin@#$123',
+        host: MySQLConfig.host || '47.74.145.146',
+        port: MySQLConfig.port || 13306,
+        username: MySQLConfig.username || 'root',
+        password: MySQLConfig.password || 'Samdata@#$',
         pool: {
           max: 5,
           min: 0,
@@ -115,8 +115,8 @@ export default (appInfo: EggAppInfo) => {
         baseDir: 'pgmodel', // load models from `app/pgmodel/*.js`
         dialect: 'postgres',
         database: 'samdata_data',
-        host: PostgreSQLConfig.host || '192.168.135.24',
-        port: PostgreSQLConfig.port || 5432,
+        host: PostgreSQLConfig.host || '47.74.145.146',
+        port: PostgreSQLConfig.port || 15432,
         username: PostgreSQLConfig.username || 'postgres',
         password: PostgreSQLConfig.password || 'Supwin999@#$',
         pool: {

@@ -2,7 +2,7 @@
 import { Application } from 'egg';
 module.exports = (app: Application) => {
   const { STRING, DATE, DECIMAL, INTEGER } = app.Sequelize;
-  const StrategyOrder = app.model.define('strategyorder', {
+  const StrategyOrder = (app as any).model.define('strategyorder', {
     Id: {
       type: INTEGER,
       primaryKey: true,

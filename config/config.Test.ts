@@ -97,15 +97,6 @@ export default (appInfo: EggAppInfo) => {
           createdAt: 'CreatedAt',
           updatedAt: 'UpdatedAt',
         },
-        dialectOptions: {
-          dateStrings: true,
-          typeCast(field, next) {
-            if (field.type === 'DATETIME') {
-              return field.string();
-            }
-            return next();
-          },
-        },
         timezone: '+00:00',
         logging: false,
       },

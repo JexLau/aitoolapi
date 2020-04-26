@@ -28,7 +28,7 @@ export default class FooBoot implements IBoot {
     } catch (err) {
       console.log('app err', err);
     }
-    console.log('********************sequelize config end:********************', this.app.config.sequelize);
+    // console.log('********************sequelize config end:********************', this.app.config.sequelize);
   }
 
   configDidLoad() {

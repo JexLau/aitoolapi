@@ -20,6 +20,6 @@ export default (app: Application) => {
   // 回测详情
   router.get('/api/:BacktestId/strategyorder', controller.backtestresult.StrategyOrderList);
   router.get('/api/:BacktestId/logs', controller.backtestresult.LogsList);
-  router.get('/api/:BacktestId/standard', controller.backtestresult.Standard);
-
+  router.get('/api/:BacktestId/backtestinfo', controller.backtestresult.Backtestinfo); // 获取回测参数
+  router.get('/api/backtest/standard', controller.backtestresult.Standard); // 基准
 };
