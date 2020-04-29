@@ -4,6 +4,7 @@
 import 'egg';
 import ExportBacktest from '../../../app/controller/backtest';
 import ExportBacktestresult from '../../../app/controller/backtestresult';
+import ExportDatabase from '../../../app/controller/database';
 import ExportDatadetails from '../../../app/controller/datadetails';
 import ExportStrategy from '../../../app/controller/strategy';
 
@@ -11,6 +12,7 @@ declare module 'egg' {
   interface IController {
     backtest: ExportBacktest;
     backtestresult: ExportBacktestresult;
+    database: ExportDatabase;
     datadetails: ExportDatadetails;
     strategy: ExportStrategy;
   }

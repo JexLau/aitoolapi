@@ -94,8 +94,6 @@ export default (appInfo: EggAppInfo) => {
           timestamps: true,
           freezeTableName: true,
           underscored: false,
-          createdAt: 'CreatedAt',
-          updatedAt: 'UpdatedAt',
         },
         timezone: '+00:00',
         logging: false,
