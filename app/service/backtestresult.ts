@@ -4,7 +4,7 @@ import moment = require('moment-timezone');
 export default class BacktestResult extends Service {
   public async StrategyOrderList(BacktestId: string, data?: any) {
     let StrategyOrderList = [];
-    if (data.Page) {
+    if (data && data.Page) {
       const Page = data.Page * 1;
       const PageSize = data.PageSize ? data.PageSize * 1 : 10;
       StrategyOrderList = await this.ctx.model.Strategyorder.findAll({
@@ -43,9 +43,9 @@ export default class BacktestResult extends Service {
     };
   }
 
-  public async LogsList(BacktestId: string, data: any) {
+  public async LogsList(BacktestId: string, data?: any) {
     let LogsList = [];
-    if (data.Page) {
+    if (data && data.Page) {
       const Page = data.Page * 1;
       const PageSize = data.PageSize ? data.PageSize * 1 : 10;
       LogsList = await this.ctx.model.Logs.findAll({
