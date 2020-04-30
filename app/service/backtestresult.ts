@@ -179,4 +179,113 @@ export default class BacktestResult extends Service {
       throw new Error(error.message);
     }
   }
+
+  // 盈亏分析
+  public async Profitloss(BacktestId: string) {
+    try {
+      const Report: any = {};
+      const res = await this.ctx.service.backtestresult.StrategyOrderList(BacktestId);
+      const StrategyOrderList: any = res.Result.StrategyOrderList;
+      // 每日盈亏
+      const amount = StrategyOrderList[0].Nav;
+      const dayProfitLoss = this.dayProfitLoss(StrategyOrderList, amount);
+      const graph = this.dayGraph(dayProfitLoss);
+      Report.dayProfitLoss = dayProfitLoss;
+      Report.graph = graph;
+      return {
+        Head: {
+          Code: '200', Message: '获取成功！', CallTime: moment().tz('UTC').format('YYYYMMDDHHmmss'),
+        },
+        Result: Report,
+      };
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
+
+  public dayGraph(dayProfitLoss) {
+    const graph: any = {
+      dayProfitLoss: [],
+      cumProfitLoss: [],
+      cumProfitLossRatio: [],
+    };
+    dayProfitLoss.forEach(day => {
+      const timestamp: number = parseInt(moment.tz(day.tradeDate, 'UTC').format('x'));
+      graph.dayProfitLoss.push([
+        timestamp,
+        day.dayProfitLoss,
+      ]);
+      graph.cumProfitLoss.push([
+        timestamp,
+        day.cumProfitLoss,
+      ]);
+      graph.cumProfitLossRatio.push([
+        timestamp,
+        day.cumProfitLossRatio,
+      ]);
+    });
+    return graph;
+  }
+
+  public dayProfitLoss(transaction, amount) {
+    const dayGroupData: any = this.dayGroup(transaction);
+    const position: any = [];
+    dayGroupData.forEach((day: any) => {
+      const tradeDate: any = day[0].MatchDate;
+      const len = day.length;
+      let dayProfitLoss = day.reduce((prev, cur) => {
+        prev = prev.CloseProfit ? prev.CloseProfit : prev;
+        if (prev === null) {
+          prev = 0;
+        }
+        if (cur.CloseProfit === null) {
+          cur.CloseProfit = 0;
+        }
+        return prev * 1 + cur.CloseProfit * 1;
+      }, 0);
+      let cumProfitLoss = day[len - 1].Nav - amount;
+      let cumProfitLossRatio = cumProfitLoss / amount;
+      // const nav = day[len - 1].Nav;
+      // 保留四位小数
+      dayProfitLoss = parseFloat(dayProfitLoss.toFixed(4));
+      cumProfitLoss = parseFloat(cumProfitLoss.toFixed(4));
+      cumProfitLossRatio = parseFloat(cumProfitLossRatio.toFixed(4));
+      position.push({
+        tradeDate,
+        dayProfitLoss,
+        cumProfitLoss,
+        cumProfitLossRatio,
+        // nav
+      });
+    });
+    return position;
+  }
+
+  // 聚合每天的交易数据
+  public dayGroup(transaction) {
+    const data = transaction.map(item => {
+      item.MatchDate = moment.tz(item.FillTime, 'UTC').format('YYYY-MM-DD');
+      item.MatchTime = moment.tz(item.FillTime, 'UTC').format('HH:mm:ss');
+      return item;
+    });
+
+    const sorted = this.groupBy(data, (item: any) => {
+      return [ item.MatchDate ];
+    });
+
+    return sorted;
+  }
+
+  // 聚合方法
+  public groupBy(array, f) {
+    const groups = {};
+    array.forEach((o: any) => {
+      const group = JSON.stringify(f(o));
+      groups[group] = groups[group] || [];
+      groups[group].push(o);
+    });
+    return Object.keys(groups).map(function(group) {
+      return groups[group];
+    });
+  }
 }

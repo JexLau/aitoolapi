@@ -27,4 +27,5 @@ export default (app: Application) => {
   router.get('/api/:BacktestId/logs', controller.backtestresult.LogsList);
   router.get('/api/:BacktestId/backtestinfo', controller.backtestresult.Backtestinfo); // 获取回测参数
   router.get('/api/backtest/standard', controller.backtestresult.Standard); // 基准
+  router.get('/api/:BacktestId/profitloss', controller.backtestresult.Profitloss);
 };
