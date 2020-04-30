@@ -89,11 +89,9 @@ export default (appInfo: EggAppInfo) => {
           idle: 10000,
         },
         define: {
-          timestamps: true,
+          timestamps: false,
           freezeTableName: true,
           underscored: false,
-          createdAt: 'CreatedAt',
-          updatedAt: 'UpdatedAt',
         },
         timezone: '+00:00',
         logging: false,

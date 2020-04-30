@@ -3,6 +3,7 @@ import moment = require('moment-timezone');
 
 export default class Datadetails extends Service {
   public async DatadetailsList(BacktestId: string) {
+    console.log(this.app.model);
     const DatadetailsList = await this.ctx.model.Datadetails.findAll({
       where: {
         JobId: BacktestId,

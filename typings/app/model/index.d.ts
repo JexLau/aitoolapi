@@ -2,17 +2,17 @@
 // Do not modify this file!!!!!!!!!
 
 import 'egg';
-import ExportBacktest = require('../../../app/model/backtest');
-import ExportBacktestinfo = require('../../../app/model/backtestinfo');
-import ExportBacktestresult = require('../../../app/model/backtestresult');
-import ExportDatadetails = require('../../../app/model/datadetails');
-import ExportDatapacket = require('../../../app/model/datapacket');
-import ExportDownload = require('../../../app/model/download');
-import ExportLogs = require('../../../app/model/logs');
-import ExportPosition = require('../../../app/model/position');
-import ExportStrategy = require('../../../app/model/strategy');
-import ExportStrategyorder = require('../../../app/model/strategyorder');
-import ExportSyncdetails = require('../../../app/model/syncdetails');
+import ExportBacktest from '../../../app/model/backtest';
+import ExportBacktestinfo from '../../../app/model/backtestinfo';
+import ExportBacktestresult from '../../../app/model/backtestresult';
+import ExportDatadetails from '../../../app/model/datadetails';
+import ExportDatapacket from '../../../app/model/datapacket';
+import ExportDownload from '../../../app/model/download';
+import ExportLogs from '../../../app/model/logs';
+import ExportPosition from '../../../app/model/position';
+import ExportStrategy from '../../../app/model/strategy';
+import ExportStrategyorder from '../../../app/model/strategyorder';
+import ExportSyncdetails from '../../../app/model/syncdetails';
 
 declare module 'egg' {
   interface IModel {
