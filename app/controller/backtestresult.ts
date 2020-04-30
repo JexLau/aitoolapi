@@ -69,7 +69,7 @@ export default class BacktestResultController extends Controller {
   public async Profitloss() {
     const { ctx } = this;
     try {
-      const serviceRep = await ctx.service.backtestresult.Profitloss(ctx.params.BacktestId);
+      const serviceRep = await ctx.service.backtestresult.Profitloss(ctx.params.BacktestId, ctx.query);
       ctx.body = serviceRep;
     } catch (error) {
       console.log(error.stack);

@@ -181,11 +181,24 @@ export default class BacktestResult extends Service {
   }
 
   // 盈亏分析
-  public async Profitloss(BacktestId: string) {
+  public async Profitloss(BacktestId: string, data?: any) {
     try {
       const Report: any = {};
-      const res = await this.ctx.service.backtestresult.StrategyOrderList(BacktestId);
-      const StrategyOrderList: any = res.Result.StrategyOrderList;
+      // const res = await this.ctx.service.backtestresult.StrategyOrderList(BacktestId);
+      const StartTime = moment.tz(data.StartTime, 'UTC').format('YYYY-MM-DD 00:00:00');
+      const EndTime = moment.tz(data.EndTime, 'UTC').format('YYYY-MM-DD 23:59:59');
+      console.log(StartTime, EndTime);
+      const StrategyOrderList = await this.ctx.model.Strategyorder.findAll({
+        where: {
+          JobId: BacktestId,
+          FillTime: {
+            [this.app.Sequelize.Op.gte]: StartTime,
+            [this.app.Sequelize.Op.lte]: EndTime,
+          },
+        },
+        raw: true,
+      });
+      console.log(StrategyOrderList[0], StrategyOrderList[1]);
       // 每日盈亏
       const amount = StrategyOrderList[0].Nav;
       const dayProfitLoss = this.dayProfitLoss(StrategyOrderList, amount);
