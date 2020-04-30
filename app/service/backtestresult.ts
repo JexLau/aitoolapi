@@ -2,38 +2,84 @@ import { Service } from 'egg';
 import moment = require('moment-timezone');
 
 export default class BacktestResult extends Service {
-  public async StrategyOrderList(BacktestId: string) {
-    const StrategyOrderList = await this.ctx.model.Strategyorder.findAll({
-      where: {
-        JobId: BacktestId,
-      },
-      order: [ 'FillTime' ],
+  public async StrategyOrderList(BacktestId: string, data?: any) {
+    let StrategyOrderList = [];
+    if (data.Page) {
+      const Page = data.Page * 1;
+      const PageSize = data.PageSize ? data.PageSize * 1 : 10;
+      StrategyOrderList = await this.ctx.model.Strategyorder.findAll({
+        where: {
+          JobId: BacktestId,
+        },
+        order: [ 'FillTime' ],
+        limit: PageSize,
+        offset: (Page - 1) * PageSize,
+        raw: true,
+      });
+    } else {
+      StrategyOrderList = await this.ctx.model.Strategyorder.findAll({
+        where: {
+          JobId: BacktestId,
+        },
+        order: [ 'FillTime' ],
+        raw: true,
+      });
+    }
+    const [ StrategyorderCount ] = await this.ctx.model.Strategyorder.findAll({
+      attributes: [
+        [ this.app.Sequelize.fn('COUNT', this.app.Sequelize.col('Id')), 'total' ],
+      ],
       raw: true,
     });
+    const Result = {
+      StrategyOrderList,
+      Total: StrategyorderCount.total,
+    };
     return {
       Head: {
         Code: '200', Message: '获取列表成功！', CallTime: moment().tz('UTC').format('YYYYMMDDHHmmss'),
       },
-      Result: {
-        StrategyOrderList,
-      },
+      Result,
     };
   }
 
-  public async LogsList(BacktestId: string) {
-    const LogsList = await this.ctx.model.Logs.findAll({
-      where: {
-        BacktestId,
-      },
+  public async LogsList(BacktestId: string, data: any) {
+    let LogsList = [];
+    if (data.Page) {
+      const Page = data.Page * 1;
+      const PageSize = data.PageSize ? data.PageSize * 1 : 10;
+      LogsList = await this.ctx.model.Logs.findAll({
+        where: {
+          BacktestId,
+        },
+        limit: PageSize,
+        offset: (Page - 1) * PageSize,
+        raw: true,
+      });
+    } else {
+      LogsList = await this.ctx.model.Logs.findAll({
+        where: {
+          BacktestId,
+        },
+        raw: true,
+      });
+    }
+    const [ LogsListCount ] = await this.ctx.model.Logs.findAll({
+      attributes: [
+        [ this.app.Sequelize.fn('COUNT', this.app.Sequelize.col('Id')), 'total' ],
+      ],
       raw: true,
     });
+    const Result = {
+      LogsList,
+      Total: LogsListCount.total,
+    };
+
     return {
       Head: {
         Code: '200', Message: '获取列表成功！', CallTime: moment().tz('UTC').format('YYYYMMDDHHmmss'),
       },
-      Result: {
-        LogsList,
-      },
+      Result,
     };
   }
 
@@ -74,13 +120,14 @@ export default class BacktestResult extends Service {
       const StrategyOrderList = res.Result.StrategyOrderList;
       let FirstFillPrice = 0;
       if (StrategyOrderList.length) {
-        FirstFillPrice = StrategyOrderList[0].FillPrice;
+        const list: any = StrategyOrderList[0];
+        FirstFillPrice = list.FillPrice;
       }
       const timeArr: any = [];
       const filltimeArr: any = [];
       const Result: any = {};
       const OrderResult: any = {};
-      StrategyOrderList.forEach(item => {
+      StrategyOrderList.forEach((item: any) => {
         const filltime = moment.tz(item.FillTime, 'UTC').format('YYYY-MM-DD HH:mm:ss');
         const time = moment.tz(item.FillTime, 'UTC').format('YYYY-MM-DD HH:mm:00 Z');
         timeArr.push(`'${time}'`);

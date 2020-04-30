@@ -5,7 +5,7 @@ export default class BacktestResultController extends Controller {
   public async StrategyOrderList() {
     const { ctx } = this;
     try {
-      const serviceRep = await ctx.service.backtestresult.StrategyOrderList(ctx.params.BacktestId);
+      const serviceRep = await ctx.service.backtestresult.StrategyOrderList(ctx.params.BacktestId, ctx.query);
       ctx.body = serviceRep;
     } catch (error) {
       console.log(error.stack);
@@ -21,7 +21,7 @@ export default class BacktestResultController extends Controller {
   public async LogsList() {
     const { ctx } = this;
     try {
-      const serviceRep = await ctx.service.backtestresult.LogsList(ctx.params.BacktestId);
+      const serviceRep = await ctx.service.backtestresult.LogsList(ctx.params.BacktestId, ctx.query);
       ctx.body = serviceRep;
     } catch (error) {
       console.log(error.stack);
