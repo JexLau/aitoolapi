@@ -26,6 +26,9 @@ export default class BacktestResult extends Service {
       });
     }
     const [ StrategyorderCount ] = await this.ctx.model.Strategyorder.findAll({
+      attributes: [
+        [ this.app.Sequelize.fn('COUNT', this.app.Sequelize.col('Id')), 'total' ],
+      ],
       where: {
         JobId: BacktestId,
       },
@@ -65,6 +68,9 @@ export default class BacktestResult extends Service {
       });
     }
     const [ LogsListCount ] = await this.ctx.model.Logs.findAll({
+      attributes: [
+        [ this.app.Sequelize.fn('COUNT', this.app.Sequelize.col('Id')), 'total' ],
+      ],
       where: {
         BacktestId,
       },
