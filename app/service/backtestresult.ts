@@ -211,7 +211,6 @@ export default class BacktestResult extends Service {
   public async Profitloss(BacktestId: string, data?: any) {
     try {
       const Report: any = {};
-      // const res = await this.ctx.service.backtestresult.StrategyOrderList(BacktestId);
       const StartTime = moment.tz(data.StartTime, 'UTC').format('YYYY-MM-DD 00:00:00');
       const EndTime = moment.tz(data.EndTime, 'UTC').format('YYYY-MM-DD 23:59:59');
       console.log(StartTime, EndTime);
@@ -225,13 +224,14 @@ export default class BacktestResult extends Service {
         },
         raw: true,
       });
-      console.log(StrategyOrderList[0], StrategyOrderList[1]);
       // 每日盈亏
       const amount = StrategyOrderList[0].Nav;
       const dayProfitLoss = this.dayProfitLoss(StrategyOrderList, amount);
       const graph = this.dayGraph(dayProfitLoss);
+      const profitlossAnalysis = this.profitlossAnalysis(dayProfitLoss);
       Report.dayProfitLoss = dayProfitLoss;
       Report.graph = graph;
+      Report.profitlossAnalysis = profitlossAnalysis;
       return {
         Head: {
           Code: '200', Message: '获取成功！', CallTime: moment().tz('UTC').format('YYYYMMDDHHmmss'),
@@ -241,6 +241,40 @@ export default class BacktestResult extends Service {
     } catch (error) {
       throw new Error(error.message);
     }
+  }
+
+  public profitlossAnalysis(dayProfitLoss) {
+    const profitlossAnalysis = {
+      CumProfit: 0,
+      CumLoss: 0,
+      CumPnl: 0,
+      PnlDay: 0,
+      LossDay: 0,
+      FlatDay: 0,
+      AveragePnl: 0,
+      AverageLoss: 0,
+      WinRatio: 0,
+      ProfitLossRatio: 0,
+    };
+    dayProfitLoss.forEach(day => {
+      if (day.dayProfitLoss > 0) {
+        profitlossAnalysis.PnlDay++;
+        profitlossAnalysis.CumProfit += day.dayProfitLoss;
+      } else if (day.dayProfitLoss < 0) {
+        profitlossAnalysis.LossDay++;
+        profitlossAnalysis.CumLoss += day.dayProfitLoss;
+      } else if (day.dayProfitLoss === 0) {
+        profitlossAnalysis.FlatDay++;
+      }
+    });
+    profitlossAnalysis.CumLoss = Math.abs(profitlossAnalysis.CumLoss);
+    profitlossAnalysis.CumPnl = profitlossAnalysis.CumProfit - profitlossAnalysis.CumLoss;
+    const day = dayProfitLoss.length;
+    profitlossAnalysis.AveragePnl = profitlossAnalysis.CumProfit / day;
+    profitlossAnalysis.AverageLoss = profitlossAnalysis.CumLoss / day;
+    profitlossAnalysis.WinRatio = profitlossAnalysis.PnlDay / day;
+    profitlossAnalysis.ProfitLossRatio = profitlossAnalysis.AveragePnl / profitlossAnalysis.AverageLoss;
+    return profitlossAnalysis;
   }
 
   public dayGraph(dayProfitLoss) {
