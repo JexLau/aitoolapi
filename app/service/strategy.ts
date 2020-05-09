@@ -87,7 +87,7 @@ export default class Strategy extends Service {
 
   public async AddStrategyByUserId(UserId: string, data: any) {
     try {
-      this.ctx.model.Strategy.create({
+      await this.ctx.model.Strategy.create({
         Id: data.Id,
         UserId,
         Name: data.Name,
