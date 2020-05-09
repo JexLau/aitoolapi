@@ -158,21 +158,21 @@ export default class BacktestResult extends Service {
 
   public async Standard(data: any) {
     try {
-      let Interval = data.Interval;
-      if (data.TradeType === 'Forex') {
-        // 1:1m 2:5m 3:15m 4:30m 5:1h
-        if (data.Interval === '1m') {
-          Interval = 60;
-        } else if (data.Interval === '5m') {
-          Interval = 300;
-        } else if (data.Interval === '15m') {
-          Interval = 900;
-        } else if (data.Interval === '30m') {
-          Interval = 1800;
-        } else if (data.Interval === '30m') {
-          Interval = 3600;
-        }
-      }
+      // let Interval = data.Interval;
+      // if (data.TradeType === 'Forex') {
+      //   // 1:1m 2:5m 3:15m 4:30m 5:1h
+      //   if (data.Interval === '1m') {
+      //     Interval = 60;
+      //   } else if (data.Interval === '5m') {
+      //     Interval = 300;
+      //   } else if (data.Interval === '15m') {
+      //     Interval = 900;
+      //   } else if (data.Interval === '30m') {
+      //     Interval = 1800;
+      //   } else if (data.Interval === '30m') {
+      //     Interval = 3600;
+      //   }
+      // }
       const DatadetailsList = await this.ctx.model.Datadetails.findAll({
         where: {
           Exchange: data.Exchange || '',
@@ -180,7 +180,7 @@ export default class BacktestResult extends Service {
           Symbol: data.Symbol,
           DataType: data.DataType,
           TradeType: data.TradeType,
-          Interval,
+          Interval: data.Interval,
         },
         raw: true,
       });
