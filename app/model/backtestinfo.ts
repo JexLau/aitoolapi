@@ -20,7 +20,8 @@ module.exports = (app: Application) => {
       field: 'BacktestParam',
     },
     CreatedAt: {
-      type: DataTypes.DATE,
+      type: 'TIMESTAMP',
+      defaultValue: app.Sequelize.literal('CURRENT_TIMESTAMP'),
       allowNull: true,
       primaryKey: false,
       autoIncrement: false,
@@ -28,7 +29,8 @@ module.exports = (app: Application) => {
       field: 'CreatedAt',
     },
     UpdatedAt: {
-      type: DataTypes.DATE,
+      type: 'TIMESTAMP',
+      defaultValue: app.Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'),
       allowNull: true,
       primaryKey: false,
       autoIncrement: false,

@@ -73,7 +73,7 @@ module.exports = (app: Application) => {
       field: 'VolumeMultiple',
     },
     Quantity: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(18, 4),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
@@ -199,15 +199,16 @@ module.exports = (app: Application) => {
       field: 'CloseProfitRatio',
     },
     CreatedAt: {
-      type: DataTypes.DATE,
+      type: 'TIMESTAMP',
+      defaultValue: app.Sequelize.literal('CURRENT_TIMESTAMP'),
       allowNull: true,
-      defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       field: 'CreatedAt',
     },
     UpdatedAt: {
-      type: DataTypes.DATE,
+      type: 'TIMESTAMP',
+      defaultValue: app.Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'),
       allowNull: true,
       primaryKey: false,
       autoIncrement: false,
