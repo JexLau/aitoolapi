@@ -78,8 +78,8 @@ export default (appInfo: EggAppInfo) => {
         delegate: 'model', // load all models to app.model and ctx.model
         baseDir: 'model', // load models from `app/model/*.js`
         dialect: 'mysql',
-        // database: 'samdata_terminal',
-        database: 'samdata_test',
+        database: 'samdata_terminal',
+        // database: 'samdata_test',
         host: MySQLConfig.host || '192.168.134.241',
         port: MySQLConfig.port || 3306,
         username: MySQLConfig.username || 'bitcoin',
