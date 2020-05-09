@@ -1,6 +1,7 @@
 import { Application } from 'egg';
 import { TextDataTypeOptions } from 'sequelize/lib/data-types';
 const Long: TextDataTypeOptions = 'long';
+
 module.exports = (app: Application) => {
   const DataTypes = app.Sequelize;
   const attributes = {
@@ -20,16 +21,14 @@ module.exports = (app: Application) => {
       field: 'BacktestResult',
     },
     CreatedAt: {
-      type: 'TIMESTAMP',
-      defaultValue: app.Sequelize.literal('CURRENT_TIMESTAMP'),
+      type: DataTypes.DATE,
       allowNull: true,
       primaryKey: false,
       autoIncrement: false,
       field: 'CreatedAt',
     },
     UpdatedAt: {
-      type: 'TIMESTAMP',
-      defaultValue: app.Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'),
+      type: DataTypes.DATE,
       allowNull: true,
       primaryKey: false,
       autoIncrement: false,

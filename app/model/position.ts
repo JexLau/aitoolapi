@@ -44,8 +44,7 @@ module.exports = (app: Application) => {
       field: 'Direction',
     },
     CreatedAt: {
-      type: 'TIMESTAMP',
-      defaultValue: app.Sequelize.literal('CURRENT_TIMESTAMP'),
+      type: DataTypes.DATE,
       allowNull: false,
       primaryKey: false,
       autoIncrement: false,
