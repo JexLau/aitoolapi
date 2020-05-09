@@ -11,6 +11,7 @@ export default class Strategy extends Service {
         where: {
           UserId,
         },
+        order: [[ 'CreatedAt', 'DESC' ]],
         raw: true,
       });
       return {

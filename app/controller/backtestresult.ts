@@ -18,6 +18,22 @@ export default class BacktestResultController extends Controller {
     }
   }
 
+  public async PositionOrders() {
+    const { ctx } = this;
+    try {
+      const serviceRep = await ctx.service.backtestresult.PositionOrders(ctx.params.BacktestId);
+      ctx.body = serviceRep;
+    } catch (error) {
+      console.log(error.stack);
+      ctx.body = {
+        Head: { Code: '500', Message: '发生错误！', CallTime: moment().tz('UTC').format('YYYYMMDDHHmmss') },
+        Result: {
+          ErrorMsg: error.message,
+        },
+      };
+    }
+  }
+
   public async LogsList() {
     const { ctx } = this;
     try {

@@ -25,7 +25,7 @@ export default class BacktestResult extends Service {
         raw: true,
       });
     }
-    const [ StrategyorderCount ] = await this.ctx.model.Strategyorder.findAll({
+    const [ StrategyorderCount = 0 ] = await this.ctx.model.Strategyorder.findAll({
       attributes: [
         [ this.app.Sequelize.fn('COUNT', this.app.Sequelize.col('Id')), 'total' ],
       ],
@@ -38,6 +38,58 @@ export default class BacktestResult extends Service {
       StrategyOrderList,
       Total: StrategyorderCount.total,
     };
+    return {
+      Head: {
+        Code: '200', Message: '获取列表成功！', CallTime: moment().tz('UTC').format('YYYYMMDDHHmmss'),
+      },
+      Result,
+    };
+  }
+
+  public async PositionOrders(BacktestId: string) {
+    let StrategyOrderList = [];
+    StrategyOrderList = await this.ctx.model.Strategyorder.findAll({
+      where: {
+        JobId: BacktestId,
+      },
+      order: [[ 'FillTime', 'DESC' ]],
+      raw: true,
+    });
+    const PositionSorted = this.groupBy(StrategyOrderList, (item: any) => {
+      return [ item.PositionId ];
+    });
+    const PositionData: any = [];
+    PositionSorted.forEach(data => {
+      const len = data.length;
+      const PStartTime = moment.tz(data[len - 1].FillTime, 'UTC').format('YYYY-MM-DD HH:mm:ss');
+      const PEndTime = moment.tz(data[0].FillTime, 'UTC').format('YYYY-MM-DD HH:mm:ss');
+
+      const Orders = data;
+      const PositionId = data[0].PositionId;
+      const Status = data[0].Offset;
+      const PositionTime = `${PStartTime} ~ ${PEndTime}`;
+      const CumProfit = data[0].Nav - data[len - 1].Nav;
+      const CumProfitRatio = data[0].CloseProfitRatio;
+      let MaxPosition = 0;
+      data.forEach(item => {
+        const OldMaxPosition = MaxPosition;
+        const Direction = item.Direction === 'Sell' ? -1 : 1;
+        const Quantity = parseFloat(item.Quantity);
+        const Position = MaxPosition + Direction * Quantity;
+        MaxPosition = Math.abs(OldMaxPosition) > Math.abs(Position) ? OldMaxPosition : Position;
+      });
+
+      PositionData.push({
+        PositionId,
+        PositionTime,
+        CumProfit,
+        CumProfitRatio,
+        MaxPosition: Math.abs(MaxPosition),
+        Status,
+        Orders,
+      });
+    });
+    const Result = PositionData;
     return {
       Head: {
         Code: '200', Message: '获取列表成功！', CallTime: moment().tz('UTC').format('YYYYMMDDHHmmss'),
