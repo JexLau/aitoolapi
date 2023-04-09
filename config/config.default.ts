@@ -8,14 +8,6 @@ export default (appInfo: EggAppInfo) => {
 
   config.middleware = [];
 
-  // config.cluster = {
-  //   listen: {
-  //     path: '',
-  //     port: 7012,
-  //     hostname: '0.0.0.0',
-  //   },
-  // };
-
   // 开启跨域
   config.security = {
     csrf: {

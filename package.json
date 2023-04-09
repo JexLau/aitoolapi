@@ -9,9 +9,9 @@
   },
   "scripts": {
     "start:tsc": "npm run tsc && npm run start",
-    "start": "egg-scripts start --title=egg-server-bussiness --port 7012",
+    "start": "egg-scripts start --title=egg-server-bussiness",
     "stop": "egg-scripts stop --title=egg-server-bussiness",
-    "dev": "egg-bin dev --port 7012",
+    "dev": "egg-bin dev",
     "debug": "egg-bin debug",
     "test-local": "egg-bin test",
     "test": "npm run lint -- --fix && npm run test-local",
