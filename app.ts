@@ -10,21 +10,6 @@ export default class FooBoot implements IBoot {
   configWillLoad() {
     try {
       console.log('env:', this.app.config.env);
-      // const MysqlConfig = process.env.MySQL_Session;
-      // if (MysqlConfig) {
-      //   // const nameNum = MysqlConfig.indexOf(':');
-      //   // const user = MysqlConfig.substr(0, nameNum);
-      //   // const other = MysqlConfig.substr(nameNum + 1);
-      //   // const ipNum = other.lastIndexOf('@');
-      //   // const password = other.substr(0, ipNum);
-      //   // const ip = other.substr(ipNum + 1);
-      //   // const allIp = ip.split(':');
-      //   // console.log('sequelize config change:', MysqlConfig, user, password, allIp[0], allIp[1]);
-      //   // this.app.config.sequelize.host = allIp[0];
-      //   // this.app.config.sequelize.port = allIp[1];
-      //   // this.app.config.sequelize.username = user;
-      //   // this.app.config.sequelize.password = password;
-      // }
     } catch (err) {
       console.log('app err', err);
     }

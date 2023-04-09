@@ -3,30 +3,34 @@ import { Application } from 'egg';
 export default (app: Application) => {
   const { controller, router } = app;
   // 测试
-  router.get('/', controller.strategy.Test);
+  // router.get('/', controller.strategy.Test);
+  router.get('/api/c1', controller.c1.c1All);
+  router.get('/api/c2', controller.c2.c2All);
+  router.get('/api/tool', controller.tools.toolList);
+  router.get('/api/tool/:name', controller.tools.toolDetail);
 
   // 初始化数据库表结构
-  router.post('/api/database/table', controller.database.initDBTable);
+  // router.post('/api/database/table', controller.database.initDBTable);
 
-  // 策略
-  router.get('/api/:UserId/strategy', controller.strategy.StrategyList);
-  router.post('/api/:UserId/strategy', controller.strategy.AddStrategy);
-  router.put('/api/strategy/:Id', controller.strategy.UpdateStrategy);
-  router.put('/api/strategy/:Id/backtestnum', controller.strategy.UpdateBacktestNum);
-  router.delete('/api/strategy/:Id', controller.strategy.DelStrategy);
+  // // 策略
+  // router.get('/api/:UserId/strategy', controller.strategy.StrategyList);
+  // router.post('/api/:UserId/strategy', controller.strategy.AddStrategy);
+  // router.put('/api/strategy/:Id', controller.strategy.UpdateStrategy);
+  // router.put('/api/strategy/:Id/backtestnum', controller.strategy.UpdateBacktestNum);
+  // router.delete('/api/strategy/:Id', controller.strategy.DelStrategy);
 
-  // 回测
-  router.get('/api/:StrategyId/backtest', controller.backtest.BacktestList);
-  router.get('/api/:StrategyId/backtest/newest', controller.backtest.BacktestNewest);
-  router.get('/api/backtest/:Id/status', controller.backtest.BacktestStatus);
-  router.put('/api/backtest/:Id', controller.backtest.UpdateBacktest);
-  router.delete('/api/backtest/:Id', controller.backtest.DelBacktest);
+  // // 回测
+  // router.get('/api/:StrategyId/backtest', controller.backtest.BacktestList);
+  // router.get('/api/:StrategyId/backtest/newest', controller.backtest.BacktestNewest);
+  // router.get('/api/backtest/:Id/status', controller.backtest.BacktestStatus);
+  // router.put('/api/backtest/:Id', controller.backtest.UpdateBacktest);
+  // router.delete('/api/backtest/:Id', controller.backtest.DelBacktest);
 
-  // 回测详情
-  router.get('/api/:BacktestId/strategyorder', controller.backtestresult.StrategyOrderList);
-  router.get('/api/:BacktestId/positionorder', controller.backtestresult.PositionOrders);
-  router.get('/api/:BacktestId/logs', controller.backtestresult.LogsList);
-  router.get('/api/:BacktestId/backtestinfo', controller.backtestresult.Backtestinfo); // 获取回测参数
-  router.get('/api/backtest/standard', controller.backtestresult.Standard); // 基准
-  router.get('/api/:BacktestId/profitloss', controller.backtestresult.Profitloss);
+  // // 回测详情
+  // router.get('/api/:BacktestId/strategyorder', controller.backtestresult.StrategyOrderList);
+  // router.get('/api/:BacktestId/positionorder', controller.backtestresult.PositionOrders);
+  // router.get('/api/:BacktestId/logs', controller.backtestresult.LogsList);
+  // router.get('/api/:BacktestId/backtestinfo', controller.backtestresult.Backtestinfo); // 获取回测参数
+  // router.get('/api/backtest/standard', controller.backtestresult.Standard); // 基准
+  // router.get('/api/:BacktestId/profitloss', controller.backtestresult.Profitloss);
 };

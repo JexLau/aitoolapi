@@ -2,30 +2,14 @@
 // Do not modify this file!!!!!!!!!
 
 import 'egg';
-import ExportBacktest from '../../../app/model/backtest';
-import ExportBacktestinfo from '../../../app/model/backtestinfo';
-import ExportBacktestresult from '../../../app/model/backtestresult';
-import ExportDatadetails from '../../../app/model/datadetails';
-import ExportDatapacket from '../../../app/model/datapacket';
-import ExportDownload from '../../../app/model/download';
-import ExportLogs from '../../../app/model/logs';
-import ExportPosition from '../../../app/model/position';
-import ExportStrategy from '../../../app/model/strategy';
-import ExportStrategyorder from '../../../app/model/strategyorder';
-import ExportSyncdetails from '../../../app/model/syncdetails';
+import ExportCategary1 from '../../../app/model/categary1';
+import ExportCategary2 from '../../../app/model/categary2';
+import ExportTools from '../../../app/model/tools';
 
 declare module 'egg' {
   interface IModel {
-    Backtest: ReturnType<typeof ExportBacktest>;
-    Backtestinfo: ReturnType<typeof ExportBacktestinfo>;
-    Backtestresult: ReturnType<typeof ExportBacktestresult>;
-    Datadetails: ReturnType<typeof ExportDatadetails>;
-    Datapacket: ReturnType<typeof ExportDatapacket>;
-    Download: ReturnType<typeof ExportDownload>;
-    Logs: ReturnType<typeof ExportLogs>;
-    Position: ReturnType<typeof ExportPosition>;
-    Strategy: ReturnType<typeof ExportStrategy>;
-    Strategyorder: ReturnType<typeof ExportStrategyorder>;
-    Syncdetails: ReturnType<typeof ExportSyncdetails>;
+    Categary1: ReturnType<typeof ExportCategary1>;
+    Categary2: ReturnType<typeof ExportCategary2>;
+    Tools: ReturnType<typeof ExportTools>;
   }
 }
