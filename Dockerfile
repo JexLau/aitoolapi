@@ -1,6 +1,6 @@
 FROM node
 WORKDIR /
 COPY . /
-RUN npm install
+RUN yarn
 EXPOSE 7012
-CMD ["npm","run","start:tsc"]
+CMD ["yarn","run","start:tsc"]
